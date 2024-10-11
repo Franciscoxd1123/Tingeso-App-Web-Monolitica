@@ -6,17 +6,20 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "clientes")
+@Table(name = "request")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class ClienteEntity {
+public class requestEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(unique = true, nullable = false)
     private Long id;
     private String rut;
-    private String nombre;
-    private int edad;
+    private String type;
+    private int amount;
+    private float interest;
+    private int time;
+    private int state;
 }

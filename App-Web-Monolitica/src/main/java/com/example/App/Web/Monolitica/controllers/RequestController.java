@@ -27,15 +27,21 @@ public class RequestController {
         return ResponseEntity.ok(request);
     }
 
+    @GetMapping("/rut/{rut}")
+    public ResponseEntity<List<RequestEntity>> getRequestsByRut(@PathVariable String rut) {
+        List<RequestEntity> requests = requestService.getRequestsByRut(rut);
+        return ResponseEntity.ok(requests);
+    }
+
     @PostMapping("/")
     public ResponseEntity<RequestEntity> saveRequest(@RequestBody RequestEntity request) {
         RequestEntity requestNew = requestService.saveRequest(request);
         return ResponseEntity.ok(requestNew);
     }
 
-    @PutMapping("/")
-    public ResponseEntity<RequestEntity> updateRequest(@RequestBody RequestEntity request){
-        RequestEntity requestUpdated = requestService.updateRequest(request);
+    @PutMapping("/{id}")
+    public ResponseEntity<RequestEntity> updateRequest(@RequestBody RequestEntity request, @PathVariable Long id){
+        RequestEntity requestUpdated = requestService.updateRequest(request, id);
         return ResponseEntity.ok(requestUpdated);
     }
 

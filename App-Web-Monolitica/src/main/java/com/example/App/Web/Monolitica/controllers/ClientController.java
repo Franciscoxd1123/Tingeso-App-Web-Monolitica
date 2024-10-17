@@ -18,10 +18,4 @@ public class ClientController {
         ClientEntity clientNew = clientService.saveClient(client);
         return ResponseEntity.ok(clientNew);
     }
-
-    @PutMapping("/")
-    public ResponseEntity<ClientEntity> updateClient(@RequestBody ClientEntity client){
-        ClientEntity clientUpdated = clientService.updateClient(client);
-        return ResponseEntity.ok(clientUpdated);
-    }
 }

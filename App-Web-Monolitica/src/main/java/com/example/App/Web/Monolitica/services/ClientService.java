@@ -13,8 +13,4 @@ public class ClientService {
     public ClientEntity saveClient(ClientEntity client){
         return clientRepository.save(client);
     }
-
-    public ClientEntity updateClient(ClientEntity client) {
-        return clientRepository.save(client);
-    }
 }

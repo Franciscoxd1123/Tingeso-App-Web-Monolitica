@@ -1,7 +1,6 @@
 package com.example.App.Web.Monolitica.services;
 
 import com.example.App.Web.Monolitica.entities.*;
-import com.example.App.Web.Monolitica.repositories.*;
 import org.springframework.stereotype.Service;
 
 import static java.lang.Math.*;
@@ -46,7 +45,7 @@ public class BusinessLogicService {
                 }
             }
             else{//Si es independiente
-                if(client.isStable() == false){
+                if(client.isStable() == false){//No tiene estabilidad financiera
                     request.setState(7);
                 }
             }
@@ -68,25 +67,13 @@ public class BusinessLogicService {
         }
     }
 
-    /* Revisar
-    -Monto Máximo de Financiamiento:
-    El banco tiene reglas sobre el porcentaje máximo del valor de la propiedad que puede financiar dependiendo del tipo de préstamo.
-     */
-
-    //Realiza la verificación de la edad del cliente
-    /*
-     -Edad del Solicitante:
-     La edad máxima permitida al momento de finalizar el préstamo suele ser 75 años. Si el solicitante es muy cercano a esta edad,
-     el plazo del préstamo se rechaza. Nota: “muy cercano a esta edad” significa que el solicitante tendría 5 años o menos de margen
-     antes de alcanzar la edad máxima de 75 años al finalizar el plazo del préstamo.
-    */
-
     //Revisa la capacidad de ahorro
     public void savingsCapacity(ClientEntity client, RequestEntity request){
         int C = 0;
         double ten = request.getAmount() * 0.1;//10% del monto del préstamo solicitado
-        double twenty = request.getAmount();//20% del monto del préstamo solicitado
+        double twenty = request.getAmount() * 0.2;//20% del monto del préstamo solicitado
         double thirty = client.getSaved() * 0.3;//30% del saldo de su cuenta
+        double fifty = client.getSaved() * 0.5;//50% del saldo de su cuenta
         double five = client.getSalary() * 0.05;//5% de sus ingresos mensuales
 
         if(request.getState() == 3){
@@ -96,7 +83,11 @@ public class BusinessLogicService {
             }
 
             //Historial de Ahorro Consistente
-
+            if(client.getSaved() > 0){
+                if(client.getRetreats() <= fifty){
+                    C = C + 1;
+                }
+            }
 
             //Depósitos Periódicos
             if(client.getDeposits() >= five){//Depósitos últimos 12 meses

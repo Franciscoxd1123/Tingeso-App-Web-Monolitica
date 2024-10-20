@@ -18,7 +18,8 @@ public class RequestService {
     }
 
     public RequestEntity getRequestById(Long id){
-        return requestRepository.findById(id).get();
+        return requestRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Request not found"));
     }
 
     public List<RequestEntity> getRequestsByRut(String rut){
@@ -35,15 +36,5 @@ public class RequestService {
 
         requestUpdated.setState(request.getState());
         return requestRepository.save(requestUpdated);
-    }
-
-    public boolean deleteRequest(Long id) throws Exception {
-        try{
-            requestRepository.deleteById(id);
-            return true;
-        } catch (Exception e) {
-            throw new Exception(e.getMessage());
-        }
-
     }
 }

@@ -44,10 +44,4 @@ public class RequestController {
         RequestEntity requestUpdated = requestService.updateRequest(request, id);
         return ResponseEntity.ok(requestUpdated);
     }
-
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Boolean> deleteRequestById(@PathVariable Long id) throws Exception {
-        var isDeleted = requestService.deleteRequest(id);
-        return ResponseEntity.noContent().build();
-    }
 }

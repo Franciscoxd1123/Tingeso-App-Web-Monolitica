@@ -1,9 +1,11 @@
 import './App.css'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Navbar from './components/navBar';
+import Navbar from './components/NavBar';
 import Home from './components/Home';
-import CreateClient from './components/createClient';
+import CreateClient from './components/CreateClient';
 import NotFound from './components/NotFound';
+import MyRequests from './components/MyRequests';
+import CreateRequest from './components/CreateRequest';
 
 /*
 import EmployeeList from './components/EmployeesList';
@@ -23,6 +25,8 @@ function App() {
             <Routes>
               <Route path="/home" element={<Home/>} />
               <Route path="/clients/create" element={<CreateClient />} />
+              <Route path="/miSolicitudes" element={<MyRequests />} />
+              <Route path="/prestamo" element={<CreateRequest />} />
               <Route path="*" element={<NotFound/>} />
             </Routes>
           </div>

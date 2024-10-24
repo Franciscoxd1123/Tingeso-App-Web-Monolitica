@@ -8,15 +8,18 @@ import ListItemText from "@mui/material/ListItemText";
 import Divider from "@mui/material/Divider";
 import { Link } from "react-router-dom";
 import HomeIcon from '@mui/icons-material/Home'; 
-import PersonAddIcon from '@mui/icons-material/PersonAdd'; 
+import PersonAddIcon from '@mui/icons-material/PersonAdd';
+import LinearScaleIcon from '@mui/icons-material/LinearScale';
+import AssignmentIcon from '@mui/icons-material/Assignment'; 
 import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
-
 
 export default function Sidemenu({ open, toggleDrawer }) {
   const menuItems = [
     { text: "Inicio", link: "/home", icon: <HomeIcon />},
-    { text: "Registrar cliente", link: "/clients/create", icon: <PersonAddIcon />},
-    { text: "Simulador de Préstamos", link: "/simulador", icon: <MonetizationOnIcon />},
+    { text: "Registrar Cliente", link: "/clients/create", icon: <PersonAddIcon />},
+    { text: "Simulador de Préstamos", link: "/simulador", icon: <LinearScaleIcon />},
+    { text: "Mis Solicitudes", link: "/miSolicitudes", icon: <AssignmentIcon />},
+    { text: "Solicitar Préstamo", link: "/prestamo", icon: <MonetizationOnIcon />},
   ];
 
   return (

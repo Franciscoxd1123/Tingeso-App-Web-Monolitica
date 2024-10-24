@@ -31,15 +31,15 @@ const CreateClient = () => {
         const client = {name, lastName, rut, age, salary, saved, cSaved, latePayment, debt, 
             freelance, seniority, stable, retreats, recentRetreats, deposits, id};
         
-        clientService
-        .create(client)
-        .then((response) => {
-            console.log("Cliente ha sido añadido.", response.data);
-            navigate("/client/home");
-        })
-        .catch((error) => {
-            console.log("Ha ocurrido un error al intentar crear nuevo cliente.", error);
-        });
+          clientService
+          .create(client)
+          .then((response) => {
+              console.log("El Nuevo Cliente ha sido registrado con éxito.", response.data);
+              navigate("/home");
+          })
+          .catch((error) => {
+              console.log("Ha ocurrido un error al intentar registrar el nuevo cliente.", error);
+          });
     }
 
     return (
@@ -49,7 +49,7 @@ const CreateClient = () => {
         alignItems="center"
         justifyContent="center"
         component="form"
-        sx={{ backgroundColor: 'white', padding: 4, borderRadius: 0, boxShadow: 5, gap: 3,}}
+        sx={{ backgroundColor: 'white', padding: 20, borderRadius: 2, boxShadow: 5, gap: 4,}}
         >
           <Typography variant="h5" style={{ color: 'orange' }}>
                 {titleClientForm}
@@ -167,7 +167,6 @@ const CreateClient = () => {
                 select
                 variant="standard"
                 onChange={(e) => setLatePayment(e.target.value === 'true')}
-                style={{ width: "25%" }}
               >
                 <MenuItem value={"true"}>Yes</MenuItem>
                 <MenuItem value={"false"}>No</MenuItem>
@@ -200,7 +199,6 @@ const CreateClient = () => {
                 select
                 variant="standard"
                 onChange={(e) => setFreelance(e.target.value === 'true')}
-                style={{ width: "25%" }}
               >
                 <MenuItem value={"true"}>Yes</MenuItem>
                 <MenuItem value={"false"}>No</MenuItem>
@@ -233,7 +231,6 @@ const CreateClient = () => {
                 select
                 variant="standard"
                 onChange={(e) => setStable(e.target.value === 'true')}
-                style={{ width: "25%" }}
               >
                 <MenuItem value={"true"}>Yes</MenuItem>
                 <MenuItem value={"false"}>No</MenuItem>
@@ -300,16 +297,17 @@ const CreateClient = () => {
                 variant="contained"
                 color="info"
                 onClick={(e) => saveClient(e)}
-                style={{ marginLeft: "0.5rem" }}
                 startIcon={<SaveIcon />}
               >
-                Grabar
+                Registrar
               </Button>
           </FormControl>
-          <hr />
-          <Link to="/home">Back to Home</Link>
+          <Box sx={{ marginTop: 3 }}>
+            <Button component={Link} to="/home" variant="outlined" color="primary">
+              Back to Home
+            </Button>
+          </Box>
         </Box>
     );
 };
-
 export default CreateClient;

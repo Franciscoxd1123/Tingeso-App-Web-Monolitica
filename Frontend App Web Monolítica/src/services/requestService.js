@@ -1,23 +1,23 @@
 import httpClient from "../http-common";
 
 const getAll = () => {
-    return httpClient.get("/app/mono/requests/");
+    return httpClient.get("/requests/");
 }
 
 const getId = id => {
-    return httpClient.get(`/app/mono/requests/${id}`);
+    return httpClient.get(`/requests/${id}`);
 }
 
 const getRut = rut => {
-    return httpClient.get(`/app/mono/requests/rut/${rut}`);
+    return httpClient.get(`/requests/rut/${rut}`);
 }
 
 const create = data => {
-    return httpClient.post("/app/mono/requests/", data);
+    return httpClient.post("/requests/", data);
 }
 
 const update = (id, data) => {
-    return httpClient.put(`/app/mono/requests/${id}`, data);
+    return httpClient.put(`/requests/${id}`, data);
 }
 
 export default { getAll, getId, getRut, create, update};

@@ -12,14 +12,16 @@ import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import LinearScaleIcon from '@mui/icons-material/LinearScale';
 import AssignmentIcon from '@mui/icons-material/Assignment'; 
 import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
+import AssignmentTurnedInIcon from '@mui/icons-material/AssignmentTurnedIn';
 
 export default function Sidemenu({ open, toggleDrawer }) {
   const menuItems = [
     { text: "Inicio", link: "/home", icon: <HomeIcon />},
     { text: "Registrar Cliente", link: "/clients/create", icon: <PersonAddIcon />},
-    { text: "Simulador de Préstamos", link: "/simulador", icon: <LinearScaleIcon />},
-    { text: "Mis Solicitudes", link: "/miSolicitudes", icon: <AssignmentIcon />},
-    { text: "Solicitar Préstamo", link: "/prestamo", icon: <MonetizationOnIcon />},
+    { text: "Simulador de Préstamos", link: "/simulation", icon: <LinearScaleIcon />},
+    { text: "Mis Solicitudes", link: "/myRequests", icon: <AssignmentIcon />},
+    { text: "Solicitar Préstamo", link: "/loan", icon: <MonetizationOnIcon />},
+    { text: "Revisar Solicitudes", link: "/allRequests", icon: <AssignmentTurnedInIcon />},
   ];
 
   return (

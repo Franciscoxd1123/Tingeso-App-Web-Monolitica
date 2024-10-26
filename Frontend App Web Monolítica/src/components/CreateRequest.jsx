@@ -64,7 +64,7 @@ const CreateRequest = () => {
                 value={type}
                 variant="standard"
                 onChange={(e) => setType(e.target.value)}
-                helperText="tipo de préstamo. Ej: Primera Vivienda"
+                helperText="Tipo de préstamo. Ej: Primera Vivienda"
               />
           </FormControl>
 

@@ -6,16 +6,8 @@ import CreateClient from './components/CreateClient';
 import NotFound from './components/NotFound';
 import MyRequests from './components/MyRequests';
 import CreateRequest from './components/CreateRequest';
-
-/*
-import EmployeeList from './components/EmployeesList';
-import AddEditEmployee from './components/AddEditEmployee';
-import ExtraHoursList from './components/ExtraHoursList';
-import AddEditExtraHours from './components/AddEditExtraHours';
-import PaycheckList from './components/PaycheckList';
-import PaycheckCalculate from './components/PaycheckCalculate';
-import AnualReport from './components/AnualReport';
-*/ 
+import AllRequests from './components/AllRequests';
+import Simulation from './components/Simulation';
 
 function App() {
   return (
@@ -25,8 +17,10 @@ function App() {
             <Routes>
               <Route path="/home" element={<Home/>} />
               <Route path="/clients/create" element={<CreateClient />} />
-              <Route path="/miSolicitudes" element={<MyRequests />} />
-              <Route path="/prestamo" element={<CreateRequest />} />
+              <Route path="/simulation" element={<Simulation />} />
+              <Route path="/myRequests" element={<MyRequests />} />
+              <Route path="/loan" element={<CreateRequest />} />
+              <Route path="/allRequests" element={<AllRequests />} />
               <Route path="*" element={<NotFound/>} />
             </Routes>
           </div>

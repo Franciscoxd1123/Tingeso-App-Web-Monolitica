@@ -33,9 +33,9 @@ const Home = () => {
   
     return (
       <div style={containerStyle}>
-        <h1 style={headingStyle}>MonoPB: Sistema de Gestión de préstamos</h1>
+        <h1 style={headingStyle}>MonoPB: Sistema de Gestión de préstamos hipotecarios</h1>
         <p style={paragraphStyle}>
-          Bienvenido a la plataforma de gestión de préstamos. Aquí podrás registrarte como cliente, simular tus préstamos y 
+          Bienvenido a la plataforma de gestión de préstamos hipotecarios. Aquí podrás registrarte como cliente, simular tus préstamos y 
           poder ver todo lo relacionado a estos. 
           Esta aplicación ha sido desarrollada utilizando tecnologías como{" "}
           <a href="https://spring.io/projects/spring-boot" style={linkStyle}>Spring Boot</a> para el backend,{" "}

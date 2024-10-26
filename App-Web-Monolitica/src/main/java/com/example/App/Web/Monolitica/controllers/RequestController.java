@@ -1,6 +1,7 @@
 package com.example.App.Web.Monolitica.controllers;
 
 import com.example.App.Web.Monolitica.entities.RequestEntity;
+import com.example.App.Web.Monolitica.services.BusinessLogicService;
 import com.example.App.Web.Monolitica.services.RequestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +15,9 @@ import java.util.List;
 public class RequestController {
     @Autowired
     RequestService requestService;
+
+    @Autowired
+    private BusinessLogicService businessLogicService;
 
     @GetMapping("/")
     public ResponseEntity<List<RequestEntity>> listRequests() {
@@ -43,5 +47,11 @@ public class RequestController {
     public ResponseEntity<RequestEntity> updateRequest(@RequestBody RequestEntity request, @PathVariable Long id){
         RequestEntity requestUpdated = requestService.updateRequest(request, id);
         return ResponseEntity.ok(requestUpdated);
+    }
+
+    @PostMapping("/simulation")
+    public ResponseEntity<Integer> simulation(@RequestBody RequestEntity request) {
+        int monthlyPayments = businessLogicService.getMonthlyPayments(request);
+        return ResponseEntity.ok(monthlyPayments);
     }
 }

@@ -1,36 +1,32 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, } from "@mui/material";
-import { TextField, Button, Box, Typography, CircularProgress,} from "@mui/material";
+import { Button, Box, Typography, CircularProgress,} from "@mui/material";
 import requestService from "../services/requestService";
 import { Link } from "react-router-dom";
 
-const RequestsRut = () => {
+const AllRequests = () => {
   const [requests, setRequests] = useState([]);
-  const [rut, setRut] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const fetchRequests = () => {
+  const getRequests = () => {
     setLoading(true);
-    requestService.getRut(rut) 
+    requestService.getAll() 
       .then((response) => {
-        console.log("Mostrando tus solicitudes.", response.data);
+        console.log("Solicitudes.", response.data);
         setRequests(response.data);
         setError(null);
       })
       .catch((error) => {
-        console.log("Se ha producido un error al intentar mostrar tus solicitudes.", error);
-        setError("Error al obtener las solicitudes. Verifica el RUT ingresado.");
+        console.log("Se ha producido un error al intentar mostrar las solicitudes.", error);
+        setError("Error al obtener las solicitudes.");
       })
       .finally(() => {setLoading(false);});
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (rut) {
-      fetchRequests();
-    }
-  };
+  useEffect(() => {
+    getRequests();
+  }, []);
 
   // Función para mapear el estado a un valor legible
   const getStateLabel = (state) => {
@@ -61,20 +57,8 @@ const RequestsRut = () => {
   return (
     <Box sx={{ backgroundColor: 'white', padding: 10 }}>
       <Typography variant="h4" gutterBottom>
-        Mis Solicitudes
+        Solicitudes
       </Typography>
-      <form onSubmit={handleSubmit}>
-        <TextField
-          label="Ingrese su RUT"
-          value={rut}
-          onChange={(e) => setRut(e.target.value)}
-          required
-          sx={{ marginBottom: 2 }}
-        />
-        <Button type="submit" variant="contained" color="primary">
-          Obtener Solicitudes
-        </Button>
-      </form>
 
       {loading && <CircularProgress sx={{ marginTop: 2 }} />}
       {error && <Typography color="error">{error}</Typography>}
@@ -85,7 +69,7 @@ const RequestsRut = () => {
             <TableHead>
               <TableRow>
                 <TableCell align="center" sx={{ fontWeight: "bold" }}>
-                  Rut
+                  Rut Solicitante
                 </TableCell>
                 <TableCell align="center" sx={{ fontWeight: "bold" }}>
                   Tipo
@@ -131,4 +115,4 @@ const RequestsRut = () => {
     </Box>
   );
 };
-export default RequestsRut;
+export default AllRequests;

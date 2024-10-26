@@ -20,4 +20,8 @@ const update = (id, data) => {
     return httpClient.put(`/requests/${id}`, data);
 }
 
-export default { getAll, getId, getRut, create, update};
+const simulation = (data) => {
+    return httpClient.post("/requests/simulation", data);
+}
+
+export default { getAll, getId, getRut, create, update, simulation};

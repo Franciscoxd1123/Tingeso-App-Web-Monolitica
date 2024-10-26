@@ -60,7 +60,7 @@ const RequestsRut = () => {
 
   return (
     <Box sx={{ backgroundColor: 'white', padding: 10 }}>
-      <Typography variant="h4" gutterBottom>
+      <Typography variant="h4" style={{ color: 'orange' }} gutterBottom>
         Mis Solicitudes
       </Typography>
       <form onSubmit={handleSubmit}>
@@ -88,7 +88,7 @@ const RequestsRut = () => {
                   Rut
                 </TableCell>
                 <TableCell align="center" sx={{ fontWeight: "bold" }}>
-                  Tipo
+                  Tipo Préstamo
                 </TableCell>
                 <TableCell align="center" sx={{ fontWeight: "bold" }}>
                   Monto

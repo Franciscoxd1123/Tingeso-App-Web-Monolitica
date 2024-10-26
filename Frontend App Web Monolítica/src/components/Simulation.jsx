@@ -132,7 +132,7 @@ function Simulation() {
 
     <Box sx={{ marginTop: 3 }}>
         <Button component={Link} to="/home" variant="outlined" color="primary">
-          Volver al inicio
+          Back to Home
         </Button>
       </Box>
     </Box>

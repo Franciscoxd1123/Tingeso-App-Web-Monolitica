@@ -1,12 +1,23 @@
 package com.example.App.Web.Monolitica.services;
 
 import com.example.App.Web.Monolitica.entities.*;
+import com.example.App.Web.Monolitica.repositories.ClientRepository;
+import com.example.App.Web.Monolitica.repositories.RequestRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.NoSuchElementException;
 
 import static java.lang.Math.*;
 
 @Service
 public class BusinessLogicService {
+    @Autowired
+    ClientRepository clientRepository;
+
+    @Autowired
+    RequestRepository requestRepository;
+
     //Realiza la simulación del prestamo para el usuario
     //Realiza el calculo de las cuotas mensuales
     public int getMonthlyPayments(RequestEntity request){
@@ -129,5 +140,45 @@ public class BusinessLogicService {
         int CM = M + SD + SI;//Costo mensual
         int CT = (CM * (request.getTime() * 12)) + CA;//Costo total que se presentara al cliente
         return CT;
+    }
+
+    public RequestEntity evaluateRequest(Long id) {
+        RequestEntity request = requestRepository.findById(id)
+                .orElseThrow(() -> new NoSuchElementException("Solicitud no encontrada con id " + id));
+
+        ClientEntity client = clientRepository.findByRut(request.getRut());
+        if (client == null) {
+            throw new NoSuchElementException("Cliente no encontrado con rut " + request.getRut());
+        }
+
+        // Ejecutar la evaluación
+        int monthlyPayments = getMonthlyPayments(request);
+        getPaymentsSalary(client, request);
+        checkJob(client, request);
+        getDebtSalary(client, request);
+        savingsCapacity(client, request);
+
+        requestRepository.save(request);
+
+        // Retornar la solicitud actualizada
+        return request;
+    }
+
+    public int calculateTotalCost(Long id) {
+        RequestEntity request = requestRepository.findById(id)
+                .orElseThrow(() -> new NoSuchElementException("Solicitud no encontrada con id " + id));
+
+        if (request.getState() != 4) {
+            throw new IllegalStateException("La solicitud debe estar en estado 'Pre-aprobada' para calcular el costo total.");
+        }
+
+        ClientEntity client = clientRepository.findByRut(request.getRut());
+        if (client == null) {
+            throw new NoSuchElementException("Cliente no encontrado con rut " + request.getRut());
+        }
+
+        // Calcular el costo total
+        int totalCost = getTotalCosts(client, request);
+        return totalCost;
     }
 }

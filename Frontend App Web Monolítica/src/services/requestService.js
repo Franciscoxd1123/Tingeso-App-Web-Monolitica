@@ -24,4 +24,12 @@ const simulation = (data) => {
     return httpClient.post("/requests/simulation", data);
 }
 
-export default { getAll, getId, getRut, create, update, simulation};
+const evaluation = id => {
+    return httpClient.get(`/requests/evaluation/${id}`);
+}
+
+const totalCost = id => {
+    return httpClient.get(`/requests/totalCost/${id}`);
+}
+
+export default { getAll, getId, getRut, create, update, simulation, evaluation, totalCost };

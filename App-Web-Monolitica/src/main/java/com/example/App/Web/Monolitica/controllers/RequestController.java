@@ -54,4 +54,16 @@ public class RequestController {
         int monthlyPayments = businessLogicService.getMonthlyPayments(request);
         return ResponseEntity.ok(monthlyPayments);
     }
+
+    @GetMapping("/evaluation/{id}")
+    public ResponseEntity<RequestEntity> evaluateRequest(@PathVariable Long id) {
+        RequestEntity requestEvaluated = businessLogicService.evaluateRequest(id);
+        return ResponseEntity.ok(requestEvaluated);
+    }
+
+    @GetMapping("/totalCost/{id}")
+    public ResponseEntity<Integer> totalCost(@PathVariable Long id) {
+        int totalCost = businessLogicService.calculateTotalCost(id);
+        return ResponseEntity.ok(totalCost);
+    }
 }

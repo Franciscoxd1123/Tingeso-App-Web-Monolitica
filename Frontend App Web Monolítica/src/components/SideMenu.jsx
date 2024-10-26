@@ -13,6 +13,8 @@ import LinearScaleIcon from '@mui/icons-material/LinearScale';
 import AssignmentIcon from '@mui/icons-material/Assignment'; 
 import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
 import AssignmentTurnedInIcon from '@mui/icons-material/AssignmentTurnedIn';
+import DoneAllIcon from '@mui/icons-material/DoneAll';
+import CurrencyExchangeIcon from '@mui/icons-material/CurrencyExchange';
 
 export default function Sidemenu({ open, toggleDrawer }) {
   const menuItems = [
@@ -22,6 +24,8 @@ export default function Sidemenu({ open, toggleDrawer }) {
     { text: "Mis Solicitudes", link: "/myRequests", icon: <AssignmentIcon />},
     { text: "Solicitar Préstamo", link: "/loan", icon: <MonetizationOnIcon />},
     { text: "Revisar Solicitudes", link: "/allRequests", icon: <AssignmentTurnedInIcon />},
+    { text: "Evaluación Crédito", link: "/evaluation", icon: <DoneAllIcon />},
+    { text: "Costo Total", link: "/totalCost", icon: <CurrencyExchangeIcon />},
   ];
 
   return (

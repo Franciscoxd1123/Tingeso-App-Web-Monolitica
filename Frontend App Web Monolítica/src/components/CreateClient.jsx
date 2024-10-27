@@ -12,7 +12,7 @@ const CreateClient = () => {
     const [age, setAge] = useState("");
     const [salary, setSalary] = useState("");
     const [saved, setSaved] = useState("");
-    const [cSaved, setCSaved] = useState("");
+    const [csaved, setcsaved] = useState("");
     const [latePayment, setLatePayment] = useState("");
     const [debt, setDebt] = useState("");
     const [freelance, setFreelance] = useState("");
@@ -28,7 +28,7 @@ const CreateClient = () => {
     const saveClient = (e) => {
         e.preventDefault();
 
-        const client = {name, lastName, rut, age, salary, saved, cSaved, latePayment, debt, 
+        const client = {name, lastName, rut, age, salary, saved, csaved, latePayment, debt, 
             freelance, seniority, stable, retreats, recentRetreats, deposits, id};
         
           clientService
@@ -143,12 +143,12 @@ const CreateClient = () => {
     
           <FormControl fullWidth>
               <TextField
-                id="cSaved"
+                id="csaved"
                 label="Seniority of savings account"
                 type="number"
-                value={cSaved}
+                value={csaved}
                 variant="standard"
-                onChange={(e) => setCSaved(e.target.value)}
+                onChange={(e) => setcsaved(e.target.value)}
                 helperText="Antigüedad cuenta de ahorros en años. Ej: 3 (3 años desde que fue creada)"
                 sx={{
                   '& input[type=number]::-webkit-outer-spin-button, & input[type=number]::-webkit-inner-spin-button': {

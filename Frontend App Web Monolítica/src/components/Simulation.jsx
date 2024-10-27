@@ -20,7 +20,7 @@ function Simulation() {
     requestService
     .simulation(request)
     .then((response) => {
-        console.log("La simulación del créditoha sido realizada correctamente.", response.data);
+        console.log("La simulación del crédito ha sido realizada correctamente.", response.data);
         setMonthlyPayment(response.data);
     })
     .catch((error) => {

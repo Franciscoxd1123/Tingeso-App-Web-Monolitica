@@ -24,7 +24,7 @@ public class BusinessLogicService {
         double m = 0;
         int M = 0; //M Cuota mensual
         int P = request.getAmount(); //P Monto préstamo
-        float r = (request.getInterest() / 12) / 100; //r Tasa de interés mensual (Tasa anual/12/100)
+        double r = (request.getInterest() / 12) / 100; //r Tasa de interés mensual (Tasa anual/12/100)
         int n = request.getTime() * 12; //n Número total de pagos (Plazo en años * 12)
 
         m = P * ((r * Math.pow(1 + r, n)) / (Math.pow(1 + r, n) - 1));

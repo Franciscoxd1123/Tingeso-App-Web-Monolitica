@@ -2,15 +2,40 @@ package com.example.App.Web.Monolitica.services;
 
 import com.example.App.Web.Monolitica.entities.ClientEntity;
 import com.example.App.Web.Monolitica.entities.RequestEntity;
-import com.example.App.Web.Monolitica.services.BusinessLogicService;
+import com.example.App.Web.Monolitica.repositories.ClientRepository;
+import com.example.App.Web.Monolitica.repositories.RequestRepository;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+
+import java.util.Optional;
+
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.when;
 
 public class BusinessLogicServiceTest {
 
-    BusinessLogicService businessLogic = new BusinessLogicService();
-    RequestEntity request = new RequestEntity();
-    ClientEntity client = new ClientEntity();
+    @Mock
+    private ClientEntity client;
+    private RequestEntity request;
+
+    @Mock
+    private ClientRepository clientRepository;
+
+    @Mock
+    private RequestRepository requestRepository;
+
+    @InjectMocks
+    private BusinessLogicService businessLogic;
+
+    @BeforeEach
+    public void setUp() {
+        MockitoAnnotations.openMocks(this);
+        client = new ClientEntity();
+        request = new RequestEntity();
+    }
 
     @Test
     void whenCalculatingMonthlyPayments_thenShouldReturnPositiveValue(){
@@ -408,7 +433,194 @@ public class BusinessLogicServiceTest {
 
         //Then
         assertThat(totalCosts).isGreaterThan(0);
+    }
 
+    @Test
+    void whenCalculatingTotalCosts_thenCorrect(){
+        //Given
+        client.setName("Pedro");
+        client.setLastName("Ramírez");
+        client.setRut("34.567.890-1");
+        client.setAge(50);
+        client.setSalary(1000000);
+        client.setSaved(5000000);
+        client.setCSaved(2);
+        client.setLatePayment(false);
+        client.setDebt(0);
+        client.setFreelance(false);
+        client.setSeniority(10);
+        client.setStable(true);
+        client.setRetreats(200000);
+        client.setRecentRetreats(100000);
+        client.setDeposits(80000);
 
+        request.setRut("34.567.890-1");
+        request.setType("Remodelación");
+        request.setAmount(20000000);
+        request.setInterest(4.5F);
+        request.setTime(10);
+        request.setState(3);
+
+        //When
+        int totalCosts = businessLogic.getTotalCosts(client,request);
+
+        //Then
+        assertThat(totalCosts).isEqualTo(28193240);
+    }
+
+    @Test
+    void whenEvaluatingRequest_ThenReturnRequestState4(){
+        //Given
+        client.setName("Juan");
+        client.setLastName("Pérez");
+        client.setRut("12.345.678-9");
+        client.setAge(35);
+        client.setSalary(1200000);
+        client.setSaved(10000000);
+        client.setCSaved(3);
+        client.setLatePayment(false);
+        client.setDebt(0);
+        client.setFreelance(false);
+        client.setSeniority(5);
+        client.setStable(true);
+        client.setRetreats(500000);
+        client.setRecentRetreats(200000);
+        client.setDeposits(100000);
+
+        request.setId(1L);
+        request.setRut("12.345.678-9");
+        request.setType("Primera vivienda");
+        request.setAmount(80000000);
+        request.setInterest(4.0F);
+        request.setTime(25);
+        request.setState(3);
+
+        //When
+        when(requestRepository.findById(1L)).thenReturn(Optional.of(request));
+        when(clientRepository.findByRut("12.345.678-9")).thenReturn(client);
+        businessLogic.evaluateRequest(1L);
+
+        //Then
+        assertThat(request.getId()).isEqualTo(1L);
+        assertThat(client.getRut()).isEqualTo("12.345.678-9");
+        assertThat(request.getState()).isEqualTo(4);
+    }
+
+    @Test
+    void whenEvaluatingRequest_ThenReturnRequestState7(){
+        //Given
+        client.setName("Ana");
+        client.setLastName("Gómez");
+        client.setRut("56.789.012-3");
+        client.setAge(45);
+        client.setSalary(1200000);
+        client.setSaved(1500000);
+        client.setCSaved(0);
+        client.setLatePayment(false);
+        client.setDebt(0);
+        client.setFreelance(true);
+        client.setSeniority(2);
+        client.setStable(false);
+        client.setRetreats(800000);
+        client.setRecentRetreats(500000);
+        client.setDeposits(30000);
+
+        request.setId(2L);
+        request.setRut("56.789.012-3");
+        request.setType("Propiedad comercial");
+        request.setAmount(50000000);
+        request.setInterest(6.0F);
+        request.setTime(20);
+        request.setState(3);
+
+        //When
+        when(requestRepository.findById(2L)).thenReturn(Optional.of(request));
+        when(clientRepository.findByRut("56.789.012-3")).thenReturn(client);
+        businessLogic.evaluateRequest(2L);
+
+        //Then
+        assertThat(request.getId()).isEqualTo(2L);
+        assertThat(client.getRut()).isEqualTo("56.789.012-3");
+        assertThat(request.getState()).isEqualTo(7);
+    }
+
+    @Test
+    void whenCalculatingTotalCost_ThenReturnPositiveValue(){
+        //Given
+        client.setName("Juan");
+        client.setLastName("Pérez");
+        client.setRut("12.345.678-9");
+        client.setAge(35);
+        client.setSalary(1200000);
+        client.setSaved(10000000);
+        client.setCSaved(3);
+        client.setLatePayment(false);
+        client.setDebt(0);
+        client.setFreelance(false);
+        client.setSeniority(5);
+        client.setStable(true);
+        client.setRetreats(500000);
+        client.setRecentRetreats(200000);
+        client.setDeposits(100000);
+
+        request.setId(1L);
+        request.setRut("12.345.678-9");
+        request.setType("Primera vivienda");
+        request.setAmount(80000000);
+        request.setInterest(4.0F);
+        request.setTime(25);
+        request.setState(3);
+
+        //When
+        when(requestRepository.findById(1L)).thenReturn(Optional.of(request));
+        when(clientRepository.findByRut("12.345.678-9")).thenReturn(client);
+        businessLogic.evaluateRequest(1L);
+        int totalCosts = businessLogic.calculateTotalCost(1L);
+
+        //Then
+        assertThat(totalCosts).isGreaterThan(0);
+        assertThat(request.getId()).isEqualTo(1L);
+        assertThat(client.getRut()).isEqualTo("12.345.678-9");
+        assertThat(request.getState()).isEqualTo(4);
+    }
+
+    @Test
+    void whenCalculatingTotalCost_ThenReturnCorrect(){
+        //Given
+        client.setName("Juan");
+        client.setLastName("Pérez");
+        client.setRut("12.345.678-9");
+        client.setAge(35);
+        client.setSalary(1200000);
+        client.setSaved(10000000);
+        client.setCSaved(3);
+        client.setLatePayment(false);
+        client.setDebt(0);
+        client.setFreelance(false);
+        client.setSeniority(5);
+        client.setStable(true);
+        client.setRetreats(500000);
+        client.setRecentRetreats(200000);
+        client.setDeposits(100000);
+
+        request.setId(1L);
+        request.setRut("12.345.678-9");
+        request.setType("Primera vivienda");
+        request.setAmount(80000000);
+        request.setInterest(4.0F);
+        request.setTime(25);
+        request.setState(3);
+
+        //When
+        when(requestRepository.findById(1L)).thenReturn(Optional.of(request));
+        when(clientRepository.findByRut("12.345.678-9")).thenReturn(client);
+        businessLogic.evaluateRequest(1L);
+        int totalCosts = businessLogic.calculateTotalCost(1L);
+
+        //Then
+        assertThat(totalCosts).isEqualTo(140680700);
+        assertThat(request.getId()).isEqualTo(1L);
+        assertThat(client.getRut()).isEqualTo("12.345.678-9");
+        assertThat(request.getState()).isEqualTo(4);
     }
 }

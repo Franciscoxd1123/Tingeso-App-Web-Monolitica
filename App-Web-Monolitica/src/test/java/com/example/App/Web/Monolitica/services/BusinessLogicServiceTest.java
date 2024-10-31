@@ -387,7 +387,6 @@ public class BusinessLogicServiceTest {
         client.setRecentRetreats(500000);
         client.setDeposits(30000);
 
-        request = new RequestEntity();
         request.setRut("56.789.012-3");
         request.setType("Propiedad comercial");
         request.setAmount(50000000);

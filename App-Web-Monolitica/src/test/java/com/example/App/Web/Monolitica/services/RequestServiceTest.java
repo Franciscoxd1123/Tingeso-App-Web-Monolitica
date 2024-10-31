@@ -98,7 +98,7 @@ public class RequestServiceTest {
     }
 
     @Test
-    void whenTestSaveClient_ThenCorrectSave() {
+    void whenTestSaveRequest_ThenCorrectSave() {
         //Given
         request.setRut("34.567.890-1");
         request.setType("Remodelación");

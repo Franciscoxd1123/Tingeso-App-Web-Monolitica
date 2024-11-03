@@ -5,7 +5,7 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton"; 
 import MenuIcon from "@mui/icons-material/Menu";
-import Sidemenu from "./Sidemenu"; 
+import SideMenu from "./SideMenu"; 
 import { useState } from "react"; 
 
 export default function Navbar() {
@@ -36,7 +36,7 @@ export default function Navbar() {
         </Toolbar>
       </AppBar>
 
-      <Sidemenu open={open} toggleDrawer={toggleDrawer}></Sidemenu> 
+      <SideMenu open={open} toggleDrawer={toggleDrawer}></SideMenu> 
     </Box>
   );
 }

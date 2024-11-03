@@ -1,0 +1,12 @@
+# Ignorar dependencias y carpetas de compilación de Gradle
+.gradle
+
+# Ignorar configuraciones de IDE
+.idea
+
+# Ignorar archivos de prueba y carpetas de prueba en src
+src/test/
+**/*.test.*
+
+# Ignorar archivos de sistema y otros archivos innecesarios
+.DS_Store

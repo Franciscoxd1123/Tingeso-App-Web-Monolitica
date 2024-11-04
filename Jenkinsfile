@@ -3,10 +3,6 @@ pipeline {
     tools {
         gradle 'gradle_8_10_2'
     }
-    environment {
-        FRONTEND_IMAGE = 'monopb-frontend'
-        BACKEND_IMAGE = 'monopb-backend'
-    }
     stages {
         stage('Checkout') {
             steps {
@@ -43,10 +39,8 @@ pipeline {
             steps {
                 echo 'Building Frontend Image...'
                 script {
-                    // Change the directory to the one containing the Dockerfile
                     dir('Frontend App Web Monolítica') {
-                        // Build the Docker image with the correct context
-                        docker.build("${FRONTEND_IMAGE}", ".")
+                        sh 'docker build -t monopb-frontend .'
                     }
                 }
             }
@@ -55,7 +49,9 @@ pipeline {
             steps {
                 echo 'Building Backend Image...'
                 script {
-                    docker.build("${BACKEND_IMAGE}", "-f App-Web-Monolitica/Dockerfile .")
+                    dir('App-Web-Monolitica'){
+                        sh 'docker build -t monopb-backend .'
+                    }
                 }
             }
         }

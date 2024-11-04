@@ -28,7 +28,7 @@ pipeline {
             steps {
                 echo 'Building Frontend Image...'
                 script {
-                    docker.build(FRONTEND_IMAGE, '-t ${FRONTEND_IMAGE} -f "Frontend App Web Monolítica/Dockerfile" .')
+                    docker.build(FRONTEND_IMAGE, "-t ${FRONTEND_IMAGE} -f \"Frontend App Web Monolítica/Dockerfile\" .")
                 }
             }
         }
@@ -36,20 +36,7 @@ pipeline {
             steps {
                 echo 'Building Backend Image...'
                 script {
-                    docker.build(BACKEND_IMAGE, '-t ${BACKEND_IMAGE} -f "App-Web-Monolitica/Dockerfile" .')
-                }
-            }
-        }
-        stage('Push Images to Docker Hub') {
-            steps {
-                script {
-                    withCredentials([usernamePassword(credentialsId: 'dhpswid', passwordVariable: 'dhpsw', usernameVariable: 'dhpuser')]) {
-                        // Iniciar sesión en Docker Hub
-                        bat "docker login -u ${dhpuser} -p ${dhpsw}"
-                    }
-                    // Subir las imágenes de frontend y backend a Docker Hub
-                    bat 'docker push franciscoxd1123/monopb-frontend:latest' // Subir imagen de frontend
-                    bat 'docker push franciscoxd1123/monopb-backend:latest' // Subir imagen de backend
+                    docker.build(BACKEND_IMAGE, "-t ${BACKEND_IMAGE} -f \"App-Web-Monolitica/Dockerfile\" .")
                 }
             }
         }

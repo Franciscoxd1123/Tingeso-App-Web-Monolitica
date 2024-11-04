@@ -3,36 +3,23 @@ pipeline {
     tools {
         gradle 'gradle_8_10_2'
     }
-
     environment {
         FRONTEND_IMAGE = 'monopb-frontend'
         BACKEND_IMAGE = 'monopb-backend'
     }
-
     stages {
-        stage('Checkout Code') {
-            steps {
-                // Realiza el checkout del código fuente desde GitHub (Con token, ya que no ocupa contraseña GitHub)
-                checkout scmGit(branches: [[name: '*/master']], 
-                                 extensions: [], 
-                                 userRemoteConfigs: [[url: 'https://github.com/Franciscoxd1123/Tingeso-App-Web-Monolitica.git', 
-                                                      credentialsId: 'dhpswid']])
-            }
-        }
-
         stage('Build Gradle') {
             steps {
+                checkout scmGit(branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/Franciscoxd1123/Tingeso-App-Web-Monolitica.git']])
                 bat 'gradle clean build' // Para Windows; usar 'sh' y 'gradle clean build' en Unix/Linux
             }
         }
-
         stage('Unit Tests') {
             steps {
                 // Ejecutar pruebas con Gradle
                 bat 'gradle test' // Usar 'bat' para Windows o 'sh' para Unix/Linux
             }
         }
-
         stage('Build Frontend Image') {
             steps {
                 echo 'Building Frontend Image...'
@@ -41,7 +28,6 @@ pipeline {
                 }
             }
         }
-
         stage('Build Backend Image') {
             steps {
                 echo 'Building Backend Image...'
@@ -50,7 +36,6 @@ pipeline {
                 }
             }
         }
-
         stage('Push Images to Docker Hub') {
             steps {
                 script {
@@ -64,7 +49,6 @@ pipeline {
                 }
             }
         }
-
         stage('Deploy with Docker Compose') {
             steps {
                 echo 'Starting Docker Compose...'

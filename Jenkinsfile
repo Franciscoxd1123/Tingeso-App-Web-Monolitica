@@ -10,7 +10,7 @@ pipeline {
     stages {
         stage('Build Gradle') {
             steps {
-                checkout scmGit(branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/Franciscoxd1123/Tingeso-App-Web-Monolitica.git']])
+                checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/Franciscoxd1123/Tingeso-App-Web-Monolitica.git']])
                 bat 'gradle clean build' // Para Windows; usar 'sh' y 'gradle clean build' en Unix/Linux
             }
         }

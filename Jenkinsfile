@@ -19,7 +19,9 @@ pipeline {
         stage('Unit Tests') {
             steps {
                 // Ejecutar pruebas con Gradle
-                bat 'gradle test' // Usar 'bat' para Windows o 'sh' para Unix/Linux
+                dir('App-Web-Monolitica'){
+                    bat 'gradle test' // Usar 'bat' para Windows o 'sh' para Unix/Linux
+                }
             }
         }
         stage('Build Frontend Image') {

@@ -13,10 +13,14 @@ pipeline {
             steps {
                 dir('App-Web-Monolitica') {
                     script {
-                        if (isUnix()) {
-                            sh './gradlew clean build'
-                        } else {
-                            bat 'gradlew clean build'
+                        try {
+                            if (isUnix()) {
+                                sh './gradlew clean build'
+                            } else {
+                                bat 'gradlew clean build'
+                            }
+                        } catch (Exception e) {
+                            error "Gradle build failed: ${e.message}"
                         }
                     }
                 }
@@ -26,10 +30,14 @@ pipeline {
             steps {
                 dir('App-Web-Monolitica') {
                     script {
-                        if (isUnix()) {
-                            sh './gradlew test'
-                        } else {
-                            bat 'gradlew test'
+                        try {
+                            if (isUnix()) {
+                                sh './gradlew test'
+                            } else {
+                                bat 'gradlew test'
+                            }
+                        } catch (Exception e) {
+                            error "Unit tests failed: ${e.message}"
                         }
                     }
                 }
@@ -40,7 +48,15 @@ pipeline {
                 echo 'Building Frontend Image...'
                 script {
                     dir('Frontend App Web Monolítica') {
-                        sh 'docker build -t monopb-frontend .'
+                        try {
+                            if (isUnix()) {
+                                sh 'docker build -t monopb-frontend .'
+                            } else {
+                                bat 'docker build -t monopb-frontend .'
+                            }
+                        } catch (Exception e) {
+                            error "Frontend image build failed: ${e.message}"
+                        }
                     }
                 }
             }
@@ -49,8 +65,16 @@ pipeline {
             steps {
                 echo 'Building Backend Image...'
                 script {
-                    dir('App-Web-Monolitica'){
-                        sh 'docker build -t monopb-backend .'
+                    dir('App-Web-Monolitica') {
+                        try {
+                            if (isUnix()) {
+                                sh 'docker build -t monopb-backend .'
+                            } else {
+                                bat 'docker build -t monopb-backend .'
+                            }
+                        } catch (Exception e) {
+                            error "Backend image build failed: ${e.message}"
+                        }
                     }
                 }
             }
@@ -59,7 +83,11 @@ pipeline {
             steps {
                 echo 'Starting Docker Compose...'
                 script {
-                    sh 'docker-compose -f docker-compose.yml up -d'
+                    try {
+                        sh 'docker-compose -f docker-compose.yml up -d'
+                    } catch (Exception e) {
+                        error "Docker Compose failed: ${e.message}"
+                    }
                 }
             }
         }

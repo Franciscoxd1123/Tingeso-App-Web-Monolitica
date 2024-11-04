@@ -43,7 +43,7 @@ pipeline {
             steps {
                 echo 'Building Frontend Image...'
                 script {
-                    docker.build("${FRONTEND_IMAGE}", "-f \"Frontend App Web Monolítica/Dockerfile\" .")
+                    docker.build("${FRONTEND_IMAGE}", "-f Frontend App Web Monolítica/Dockerfile .")
                 }
             }
         }
@@ -51,7 +51,7 @@ pipeline {
             steps {
                 echo 'Building Backend Image...'
                 script {
-                    docker.build("${BACKEND_IMAGE}", "-f \"App-Web-Monolitica/Dockerfile\" .")
+                    docker.build("${BACKEND_IMAGE}", "-f App-Web-Monolitica/Dockerfile .")
                 }
             }
         }

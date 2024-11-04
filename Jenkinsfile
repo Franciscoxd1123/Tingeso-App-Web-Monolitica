@@ -43,7 +43,11 @@ pipeline {
             steps {
                 echo 'Building Frontend Image...'
                 script {
-                    docker.build("${FRONTEND_IMAGE}", "-f Frontend App Web Monolítica/Dockerfile .")
+                    // Change the directory to the one containing the Dockerfile
+                    dir('Frontend App Web Monolítica') {
+                        // Build the Docker image with the correct context
+                        docker.build("${FRONTEND_IMAGE}", ".")
+                    }
                 }
             }
         }

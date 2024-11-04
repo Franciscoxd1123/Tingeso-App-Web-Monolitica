@@ -46,6 +46,15 @@ pipeline {
                         bat 'docker build -t franciscoxd1123/monopb-backend:latest App-Web-Monolitica'
                     }
                 }
+                withCredentials([string(credentialsId: 'dockerhubpassword', variable: 'dockerpw')]) {
+                    script {
+                        if (isUnix()) {
+                            sh 'docker login -u franciscoxd1123 -p ${dockerpw}'
+                        } else {
+                            bat 'docker login -u franciscoxd1123 -p %dockerpw%'
+                        }
+                    }
+                }
                 script {
                     if (isUnix()) {
                         sh 'docker push franciscoxd1123/monopb-backend:latest'
@@ -75,6 +84,15 @@ pipeline {
                         sh 'docker build -t franciscoxd1123/monopb-frontend:latest Frontend App Web Monolítica'
                     } else {
                         bat 'docker build -t franciscoxd1123/monopb-frontend:latest Frontend App Web Monolítica'
+                    }
+                }
+                withCredentials([string(credentialsId: 'dockerhubpassword', variable: 'dockerpw')]) {
+                    script {
+                        if (isUnix()) {
+                            sh 'docker login -u franciscoxd1123 -p ${dockerpw}'
+                        } else {
+                            bat 'docker login -u franciscoxd1123 -p %dockerpw%'
+                        }
                     }
                 }
                 script {

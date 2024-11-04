@@ -2,91 +2,98 @@ pipeline {
     agent any
     tools {
         gradle 'gradle_8_10_2'
+        nodejs 'node'
     }
     stages {
-        stage('Checkout') {
+        stage('Checkout repository') {
             steps {
                 checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/Franciscoxd1123/Tingeso-App-Web-Monolitica']])
             }
         }
-        stage('Build Gradle') {
+
+        stage('Build backend') {
             steps {
-                dir('App-Web-Monolitica') {
-                    script {
-                        try {
-                            if (isUnix()) {
-                                sh './gradlew clean build'
-                            } else {
-                                bat 'gradlew clean build'
-                            }
-                        } catch (Exception e) {
-                            error "Gradle build failed: ${e.message}"
-                        }
-                    }
-                }
-            }
-        }
-        stage('Unit Tests') {
-            steps {
-                dir('App-Web-Monolitica') {
-                    script {
-                        try {
-                            if (isUnix()) {
-                                sh './gradlew test'
-                            } else {
-                                bat 'gradlew test'
-                            }
-                        } catch (Exception e) {
-                            error "Unit tests failed: ${e.message}"
-                        }
-                    }
-                }
-            }
-        }
-        stage('Build Frontend Image') {
-            steps {
-                echo 'Building Frontend Image...'
                 script {
-                    dir('Frontend App Web Monolítica') {
-                        try {
-                            if (isUnix()) {
-                                sh 'docker build -t monopb-frontend .'
-                            } else {
-                                bat 'docker build -t monopb-frontend .'
-                            }
-                        } catch (Exception e) {
-                            error "Frontend image build failed: ${e.message}"
-                        }
+                    if (isUnix()) {
+                        sh 'cd App-Web-Monolitica && ./gradlew clean build'
+                    } else {
+                        bat 'cd App-Web-Monolitica && gradlew clean build'
                     }
+                    
                 }
             }
         }
-        stage('Build Backend Image') {
+
+        stage('Test backend') {
             steps {
-                echo 'Building Backend Image...'
                 script {
-                    dir('App-Web-Monolitica') {
-                        try {
-                            if (isUnix()) {
-                                sh 'docker build -t monopb-backend .'
-                            } else {
-                                bat 'docker build -t monopb-backend .'
-                            }
-                        } catch (Exception e) {
-                            error "Backend image build failed: ${e.message}"
-                        }
+                    if (isUnix()) {
+                        sh 'cd App-Web-Monolitica && ./gradlew test'
+                    } else {
+                        bat 'cd App-Web-Monolitica && gradlew test'
                     }
                 }
             }
         }
+
+        stage('Push backend') {
+            steps {
+
+                script {
+                    if (isUnix()) {
+                        sh 'docker build -t franciscoxd1123/monopb-backend:latest App-Web-Monolitica'
+                    } else {
+                        bat 'docker build -t franciscoxd1123/monopb-backend:latest App-Web-Monolitica'
+                    }
+                }
+                script {
+                    if (isUnix()) {
+                        sh 'docker push franciscoxd1123/monopb-backend:latest'
+                    } else {
+                        bat 'docker push franciscoxd1123/monopb-backend:latest'
+                    }
+                }
+            }
+        }
+
+        stage('Build frontend') {
+            steps {
+                script {
+                    if (isUnix()) {
+                        sh 'cd Frontend App Web Monolítica && npm run build'
+                    } else {
+                        bat 'cd Frontend App Web Monolítica && npm run build'
+                    }
+                }
+            }
+        }
+
+        stage('Push frontend') {
+            steps {
+                script {
+                    if (isUnix()) {
+                        sh 'docker build -t franciscoxd1123/monopb-frontend:latest Frontend App Web Monolítica'
+                    } else {
+                        bat 'docker build -t franciscoxd1123/monopb-frontend:latest Frontend App Web Monolítica'
+                    }
+                }
+                script {
+                    if (isUnix()) {
+                        sh 'docker push franciscoxd1123/monopb-frontend:latest'
+                    } else {
+                        bat 'docker push franciscoxd1123/monopb-frontend:latest'
+                    }
+                }
+            }
+        }
+
         stage('Deploy with Docker Compose') {
             steps {
-                echo 'Starting Docker Compose...'
                 script {
-                    try {
-                        sh 'docker-compose -f docker-compose.yml up -d'
-                    } catch (Exception e) {
-                        error "Docker Compose failed: ${e.message}"
+                    if (isUnix()) {
+                        sh 'docker-compose up'
+                    } else {
+                        bat 'docker-compose up'
                     }
                 }
             }

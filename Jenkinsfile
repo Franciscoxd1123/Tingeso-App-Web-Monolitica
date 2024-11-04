@@ -8,19 +8,34 @@ pipeline {
         BACKEND_IMAGE = 'monopb-backend'
     }
     stages {
-        stage('Build Gradle') {
+        stage('Checkout') {
             steps {
                 checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/Franciscoxd1123/Tingeso-App-Web-Monolitica']])
+            }
+        }
+        stage('Build Gradle') {
+            steps {
                 dir('App-Web-Monolitica') {
-                    bat 'gradle clean build' // Para Windows; usa 'sh' para Unix/Linux
+                    script {
+                        if (isUnix()) {
+                            sh './gradlew clean build'
+                        } else {
+                            bat 'gradlew clean build'
+                        }
+                    }
                 }
             }
         }
         stage('Unit Tests') {
             steps {
-                // Ejecutar pruebas con Gradle
-                dir('App-Web-Monolitica'){
-                    bat 'gradle test' // Usar 'bat' para Windows o 'sh' para Unix/Linux
+                dir('App-Web-Monolitica') {
+                    script {
+                        if (isUnix()) {
+                            sh './gradlew test'
+                        } else {
+                            bat 'gradlew test'
+                        }
+                    }
                 }
             }
         }
@@ -28,7 +43,7 @@ pipeline {
             steps {
                 echo 'Building Frontend Image...'
                 script {
-                    docker.build(FRONTEND_IMAGE, "-t ${FRONTEND_IMAGE} -f \"Frontend App Web Monolítica/Dockerfile\" .")
+                    docker.build("${FRONTEND_IMAGE}", "-f \"Frontend App Web Monolítica/Dockerfile\" .")
                 }
             }
         }
@@ -36,7 +51,7 @@ pipeline {
             steps {
                 echo 'Building Backend Image...'
                 script {
-                    docker.build(BACKEND_IMAGE, "-t ${BACKEND_IMAGE} -f \"App-Web-Monolitica/Dockerfile\" .")
+                    docker.build("${BACKEND_IMAGE}", "-f \"App-Web-Monolitica/Dockerfile\" .")
                 }
             }
         }
@@ -44,8 +59,7 @@ pipeline {
             steps {
                 echo 'Starting Docker Compose...'
                 script {
-                    // Iniciar los servicios usando el archivo docker-compose.yml
-                    sh 'docker-compose up -d'
+                    sh 'docker-compose -f docker-compose.yml up -d'
                 }
             }
         }

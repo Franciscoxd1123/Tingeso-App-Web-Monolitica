@@ -42,9 +42,9 @@ pipeline {
 
                 script {
                     if (isUnix()) {
-                        sh 'docker build -t monopb-backend:latest App-Web-Monolitica'
+                        sh 'docker build -t franciscoxd1123/monopb-backend:latest App-Web-Monolitica'
                     } else {
-                        bat 'docker build -t monopb-backend:latest App-Web-Monolitica'
+                        bat 'docker build -t franciscoxd1123/monopb-backend:latest App-Web-Monolitica'
                     }
                 }
                 withCredentials([usernamePassword(credentialsId: 'dockerhub', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
@@ -82,9 +82,9 @@ pipeline {
             steps {
                 script {
                     if (isUnix()) {
-                        sh 'docker build -t monopb-frontend:latest FrontendAppWebMonolitica'
+                        sh 'docker build -t franciscoxd1123/monopb-frontend:latest FrontendAppWebMonolitica'
                     } else {
-                        bat 'docker build -t monopb-frontend:latest FrontendAppWebMonolitica'
+                        bat 'docker build -t franciscoxd1123/monopb-frontend:latest FrontendAppWebMonolitica'
                     }
                 }
                 withCredentials([usernamePassword(credentialsId: 'dockerhub', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
@@ -110,9 +110,9 @@ pipeline {
             steps {
                 script {
                     if (isUnix()) {
-                        sh 'docker-compose up'
+                        sh 'docker-compose up -d'
                     } else {
-                        bat 'docker-compose up'
+                        bat 'docker-compose up -d'
                     }
                 }
             }

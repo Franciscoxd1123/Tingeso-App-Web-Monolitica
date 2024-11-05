@@ -4,7 +4,7 @@ pipeline {
         gradle 'gradle_8_10_2'
         nodejs 'node'
     }
-    
+
     stages {
         stage('Checkout repository') {
             steps {
@@ -70,9 +70,9 @@ pipeline {
             steps {
                 script {
                     if (isUnix()) {
-                        sh 'cd "Frontend App Web Monolítica" && npm run build'
+                        sh 'cd FrontendAppWebMonolitica && npm run build'
                     } else {
-                        bat 'cd "Frontend App Web Monolítica" && npm run build'
+                        bat 'cd FrontendAppWebMonolitica && npm run build'
                     }
                 }
             }
@@ -82,9 +82,9 @@ pipeline {
             steps {
                 script {
                     if (isUnix()) {
-                        sh 'docker build -t franciscoxd1123/monopb-frontend:latest "Frontend App Web Monolítica"'
+                        sh 'docker build -t franciscoxd1123/monopb-frontend:latest FrontendAppWebMonolitica'
                     } else {
-                        bat 'docker build -t franciscoxd1123/monopb-frontend:latest Frontend App Web Monolítica'
+                        bat 'docker build -t franciscoxd1123/monopb-frontend:latest FrontendAppWebMonolitica'
                     }
                 }
                 withCredentials([usernamePassword(credentialsId: 'dockerhub', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {

@@ -46,12 +46,12 @@ pipeline {
                         bat 'docker build -t franciscoxd1123/monopb-backend:latest App-Web-Monolitica'
                     }
                 }
-                withCredentials([string(credentialsId: 'dockerhubpassword', variable: 'dockerpw')]) {
+                withCredentials([usernamePassword(credentialsId: 'dockerhub', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
                     script {
                         if (isUnix()) {
-                            sh 'docker login -u franciscoxd1123 -p ${dockerpw}'
+                            sh 'docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD'
                         } else {
-                            bat 'docker login -u franciscoxd1123 -p %dockerpw%'
+                            bat 'docker login -u %DOCKER_USERNAME% -p %DOCKER_PASSWORD%'
                         }
                     }
                 }
@@ -86,12 +86,12 @@ pipeline {
                         bat 'docker build -t franciscoxd1123/monopb-frontend:latest Frontend App Web Monolítica'
                     }
                 }
-                withCredentials([string(credentialsId: 'dockerhubpassword', variable: 'dockerpw')]) {
+                withCredentials([usernamePassword(credentialsId: 'dockerhub', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
                     script {
                         if (isUnix()) {
-                            sh 'docker login -u franciscoxd1123 -p ${dockerpw}'
+                            sh 'docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD'
                         } else {
-                            bat 'docker login -u franciscoxd1123 -p %dockerpw%'
+                            bat 'docker login -u %DOCKER_USERNAME% -p %DOCKER_PASSWORD%'
                         }
                     }
                 }

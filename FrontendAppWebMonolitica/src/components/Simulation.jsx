@@ -10,7 +10,7 @@ function Simulation() {
   const [interest, setInterest] = useState('');
   const [time, setTime] = useState('');
   const [monthlyPayment, setMonthlyPayment] = useState(null);
-  const [titleClientForm] = useState("Simulación de crédito");
+  const [titleClientForm] = useState("Simulación de crédito (CHILE)");
 
   const doSimulation = (e) => {
     e.preventDefault();

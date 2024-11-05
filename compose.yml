@@ -1,37 +1,37 @@
 services:
   # Frontend services
   frontend1:
-    image: monopb-frontend
+    image: franciscoxd1123/monopb-frontend:latest
     networks:
       - frontend-network
 
   frontend2:
-    image: monopb-frontend
+    image: franciscoxd1123/monopb-frontend:latest
     networks:
       - frontend-network
 
   frontend3:
-    image: monopb-frontend
+    image: franciscoxd1123/monopb-frontend:latest
     networks:
       - frontend-network
 
   # Backend services
   backend1:
-    image: monopb-backend
+    image: franciscoxd1123/monopb-backend:latest
     environment:
       - DB_HOST=postgres
     networks:
       - backend-network
 
   backend2:
-    image: monopb-backend
+    image: franciscoxd1123/monopb-backend:latest
     environment:
       - DB_HOST=postgres
     networks:
       - backend-network
 
   backend3:
-    image: monopb-backend
+    image: franciscoxd1123/monopb-backend:latest
     environment:
       - DB_HOST=postgres
     networks:

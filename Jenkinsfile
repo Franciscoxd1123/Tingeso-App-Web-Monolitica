@@ -66,6 +66,19 @@ pipeline {
             }
         }
 
+        stage('Install frontend dependencies') {
+            steps {
+                script {
+                    if (isUnix()) {
+                        sh 'cd FrontendAppWebMonolitica && npm install'
+                    } else {
+                        bat 'cd FrontendAppWebMonolitica && npm install'
+                    }
+                }
+            }
+        }
+
+
         stage('Build frontend') {
             steps {
                 script {

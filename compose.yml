@@ -45,7 +45,7 @@ services:
       POSTGRES_USER: postgres      # Usuario de la base de datos
       POSTGRES_PASSWORD: MyPostgre74SQL38 # Contraseña para el usuario
     ports:
-      - "5433:5432"  # Expone el puerto 5432 para acceso externo
+      - "5432:5432"  # Expone el puerto 5432 para acceso externo
     volumes:
       - postgres_data:/var/lib/postgresql/data  # Persistencia de datos
     networks:

@@ -1,14 +1,15 @@
 const Home = () => {
     const containerStyle = {
-      height: '72vh',
-      width: '90vw',
+      maxWidth: '100%',
+      maxHeight: '100%',
+      margin: '0 auto',
       display: 'flex',
       flexDirection: 'column',
-      justifyContent: 'center', 
-      alignItems: 'center', 
-      padding: '20px',
+      justifyContent: 'center',
+      alignItems: 'center',
+      padding: '200px',
       backgroundColor: '#f9f9f9',
-      borderRadius: '0px',
+      borderRadius: '8px',
       boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)',
     };
   
